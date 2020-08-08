@@ -33,6 +33,8 @@ export const validateIncomingData = ({
 				})
 			)
 				throw new Error("Referrer is either empty or an invalid URL.");
+		} else {
+			throw new Error("Referrer info not available");
 		}
 
 		if (validator.isEmpty(comment)) throw new Error("Comment is empty.");

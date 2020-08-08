@@ -33,11 +33,11 @@ const { GITHUB_PAT } = process.env;
 apiRouter.post(
 	"/comment/new/",
 	allowCors((req: ExpressRequest, res: ExpressResponse) => {
-		const { referer, origin } = req.headers;
+		const { referer: browserReferer, origin } = req.headers;
 		const fallbackReferer = req.body["fallback-referer"];
-		const trueReferer =
-			referer && referer !== "" && referer !== "/"
-				? referer
+		const referer =
+			browserReferer && browserReferer !== ""
+				? browserReferer
 				: fallbackReferer;
 
 		try {
@@ -65,7 +65,6 @@ apiRouter.post(
 			site = escape(site);
 			comment = escape(comment);
 			if (referer) relativeReferrer = new URL(referer).pathname;
-			else relativeReferrer = new URL(fallbackReferer).pathname;
 		} else {
 			redirectToErrorPage(res, origin);
 		}
@@ -79,10 +78,9 @@ apiRouter.post(
 			submittedAt: new Date(),
 			approved: false,
 			approvedAt: null,
-			pathname:
-				trueReferer && trueReferer !== ""
-					? trueReferer
-					: "We could not determine the article this comment was posted to.",
+			pathname: relativeReferrer
+				? relativeReferrer
+				: "We could not determine the article this comment was posted to.",
 		};
 
 		saveCommentToRepo(commentData)

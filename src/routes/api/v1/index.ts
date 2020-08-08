@@ -34,6 +34,11 @@ apiRouter.post(
 	"/comment/new/",
 	allowCors((req: ExpressRequest, res: ExpressResponse) => {
 		const { referer, origin } = req.headers;
+		const fallbackReferer = req.body["fallback-referer"];
+		const trueReferer =
+			referer && referer !== "" && referer !== "/"
+				? referer
+				: fallbackReferer;
 
 		try {
 			req.body;
@@ -60,6 +65,7 @@ apiRouter.post(
 			site = escape(site);
 			comment = escape(comment);
 			if (referer) relativeReferrer = new URL(referer).pathname;
+			else relativeReferrer = new URL(fallbackReferer).pathname;
 		} else {
 			redirectToErrorPage(res, origin);
 		}
@@ -73,7 +79,10 @@ apiRouter.post(
 			submittedAt: new Date(),
 			approved: false,
 			approvedAt: null,
-			pathname: relativeReferrer !== "" ? relativeReferrer : "/",
+			pathname:
+				trueReferer && trueReferer !== ""
+					? trueReferer
+					: "We could not determine the article this comment was posted to.",
 		};
 
 		saveCommentToRepo(commentData)

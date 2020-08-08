@@ -1,20 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-var app = express();
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-module.exports = app;
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = __importDefault(require("express"));
+var v1_1 = __importDefault(require("./routes/api/v1"));
+var app = express_1.default();
+var port = 4000 || process.env.PORT;
+app.use(express_1.default.urlencoded({ extended: false }));
+app.use("/api/v1", v1_1.default);
+app.listen(port, function () {
+    console.log("web-comments listening at http://localhost:" + port);
+});

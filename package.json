@@ -10,7 +10,9 @@
   "private": true,
   "scripts": {
     "predev": "npm install",
-    "dev": "gulp development"
+    "dev": "gulp development",
+    "preprod": "npm install",
+    "prod": "gulp production"
   },
   "dependencies": {
     "@octokit/rest": "^18.0.3",

@@ -13,9 +13,25 @@ The following environment variables are necessary:
 
 ### v1
 
-#### GET `/api/v1/comment/new`
+#### POST `/api/v1/comment/new`
 
 Accepts URL encoded requests.
+
+##### Form encoded data required
+
+- `name`
+- `email`
+- `site`
+- `comment`
+- `age` (honeypot)
+- `fallback-referer`: Some browsers do not add referer headers to form submission requests. We rely on this as a fallback. Requires JavaScript client-side.
+  
+  ```
+  const target = document.querySelector(
+    "form > input[name='fallback-referer']"
+  );
+  if (target) target.setAttribute("value", window.location.href);
+  ```
 
 #### GET `/api/v1/comment/moderate`
 

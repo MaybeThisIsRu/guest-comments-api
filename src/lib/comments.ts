@@ -12,9 +12,13 @@ export const validateIncomingData = ({
 	email,
 	site,
 	comment,
+	age,
 }: CommentSubmission): boolean => {
 	try {
 		console.log("Validating inputs...");
+
+		if (!validator.isEmpty(age))
+			throw new Error("Honeypot filled. Probably a bot!");
 
 		if (validator.isEmpty(name)) throw new Error("Name is empty.");
 
@@ -41,7 +45,7 @@ export const validateIncomingData = ({
 
 		return true;
 	} catch (error) {
-		console.log("Validation failed:", error);
+		console.error("Validation failed:", error);
 		return false;
 	}
 };

@@ -19,6 +19,7 @@ interface CommentSubmission {
 	email: string;
 	site: string;
 	comment: string;
+	age: string;
 }
 
 export { UserComment, Comment, CommentSubmission };

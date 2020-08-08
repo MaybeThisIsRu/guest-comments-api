@@ -46,7 +46,7 @@ apiRouter.post(
 			return res.status(400).json({ error: "Invalid form data." });
 		}
 
-		let { name, email, site, comment } = req.body;
+		let { name, email, site, comment, age } = req.body;
 		let relativeReferrer: string = "";
 
 		if (
@@ -56,6 +56,7 @@ apiRouter.post(
 				email,
 				site,
 				comment,
+				age,
 			})
 		) {
 			console.log("Validation successful");

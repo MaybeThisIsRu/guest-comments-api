@@ -47,3 +47,7 @@ Accepts URL encoded requests. Responds with a plain-text message upon success.
 
 - `comment_id`
 - `action`: `approve` or `delete`
+
+## Related
+
+You may also be interested in checking [open-jamstack-comments](https://github.com/hirusi/open-jamstack-comments), which runs serverless.

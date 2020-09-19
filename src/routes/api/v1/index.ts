@@ -18,6 +18,7 @@ import {
 	generateCommentId,
 	validateQueryParams,
 	getCommentFilePath,
+	fixedEncodeURIComponent,
 } from "../../../lib/comments";
 import { sendEmail } from "../../../lib/mail";
 import {
@@ -61,10 +62,10 @@ apiRouter.post(
 		) {
 			console.log("Validation successful");
 
-			name = escape(name);
-			email = escape(email);
-			site = escape(site);
-			comment = escape(comment);
+			name = fixedEncodeURIComponent(name);
+			email = fixedEncodeURIComponent(email);
+			site = fixedEncodeURIComponent(site);
+			comment = fixedEncodeURIComponent(comment);
 			if (referer) relativeReferrer = new URL(referer).pathname;
 		} else {
 			redirectToErrorPage(res, origin);

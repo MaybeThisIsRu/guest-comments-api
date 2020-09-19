@@ -93,3 +93,14 @@ export const validateQueryParams = (
 export const getCommentFilePath = (commentId: string): string => {
 	return `cache/comments/${commentId}.json`;
 };
+
+/**
+ * @description For application/x-www-form-urlencoded, spaces are to be replaced by "+", so one may wish to follow a encodeURIComponent() replacement with an additional replacement of "%20" with "+".
+ * To be more stringent in adhering to RFC 3986 (which reserves !, ', (, ), and *), even though these characters have no formalized URI delimiting uses, the following can be safely used.
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+ */
+export const fixedEncodeURIComponent = (str: string): string => {
+	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+		return "%" + c.charCodeAt(0).toString(16);
+	});
+};
